@@ -197,13 +197,24 @@ export default async function handler(request,context={}){
   });
   const api='https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model);
   const controller=new AbortController();
-  const timeout=setTimeout(()=>controller.abort(),26000);
+  // Netlify limits the entire function to 60 seconds; leave headroom for Supabase auth/RPC.
+  const timeout=setTimeout(()=>controller.abort(),45000);
+  // One bounded retry for Gemini's temporary HTTP 503 overload (never retry 429 quota errors).
+  const fetchGemini=async url=>{
+    const options={method:'POST',signal:controller.signal,
+      headers:{'content-type':'application/json','x-goog-api-key':key},body:payload};
+    let response=await fetch(url,options);
+    if(response.status!==503)return response;
+    try{await response.body?.cancel()}catch{}
+    await new Promise(resolve=>setTimeout(resolve,1200));
+    if(controller.signal.aborted)throw Object.assign(new Error('aborted'),{name:'AbortError'});
+    return await fetch(url,options);
+  };
 
   if(body.stream===true){
     let upstream;
     try{
-      upstream=await fetch(api+':streamGenerateContent?alt=sse',{method:'POST',signal:controller.signal,
-        headers:{'content-type':'application/json','x-goog-api-key':key},body:payload});
+      upstream=await fetchGemini(api+':streamGenerateContent?alt=sse');
     }catch(e){clearTimeout(timeout);return fail(e.name==='AbortError'?'Время ожидания Gemini истекло':'Ошибка связи с Gemini',504)}
     if(!upstream.ok||!upstream.body){
       clearTimeout(timeout);
@@ -242,8 +253,7 @@ export default async function handler(request,context={}){
   }
 
   try{
-    const response=await fetch(api+':generateContent',{method:'POST',signal:controller.signal,
-      headers:{'content-type':'application/json','x-goog-api-key':key},body:payload});
+    const response=await fetchGemini(api+':generateContent');
     const data=await response.json().catch(()=>({}));
     if(!response.ok){const [m,s]=geminiError(response.status,scrub(data?.error?.message||data?.message,key),model);return fail(m,s)}
     const answer=(data.candidates||[]).flatMap(c=>(c.content?.parts||[]).filter(p=>typeof p.text==='string'&&!p.thought).map(p=>p.text)).join('\n').trim();
