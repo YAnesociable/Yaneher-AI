@@ -1,0 +1,111 @@
+/* Compact troubleshooting and video review. Theme colors follow customization tokens. */
+.diagnostic-workspace {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 8px 28px rgb(28 24 74 / .035);
+}
+.diagnostic-search-row { display: flex; align-items: end; gap: 12px; }
+.diagnostic-search-row label { display: grid; gap: 8px; flex: 1; min-width: 0; font-size: 13px; font-weight: 650; }
+.diagnostic-search-row input { width: 100%; min-width: 0; margin: 0; padding: 12px 14px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); border-radius: 10px; font: inherit; font-weight: 400; line-height: 1.4; transition: border-color .18s, box-shadow .18s; }
+.diagnostic-search-row input::placeholder { color: var(--muted); opacity: 1; }
+.diagnostic-search-row input:focus-visible { outline: 2px solid transparent; border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 15%, transparent); }
+.diagnostic-search-row > button { flex-shrink: 0; min-height: 44px; }
+.diagnostic-status { display: flex; justify-content: space-between; gap: 12px; margin-top: 13px; color: var(--muted); font-size: 12px; }
+.diagnostic-status strong { color: var(--text); }
+#diagnostic-categories { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
+#diagnostic-categories .category-card { flex: 0 1 auto; display: inline-flex; flex-direction: row; align-items: center; justify-content: center; gap: 9px; padding: 10px 13px; min-width: 0; min-height: 44px; border-radius: 12px; font-size: 13px; }
+#diagnostic-categories .category-card > b { display: flex; margin: 0; }
+#diagnostic-categories .category-card svg { width: 16px; height: 16px; }
+#diagnostic-categories .category-card small { padding: 2px 6px; background: var(--surface2); border-radius: 6px; font-size: 11px; color: var(--muted); }
+#diagnostic-categories .category-card.active { box-shadow: inset 0 0 0 1px var(--primary), 0 3px 14px color-mix(in srgb, var(--primary) 10%, transparent); }
+#diagnostics-list .diagnostic-grid { gap: 12px; }
+#diagnostics-list .diag-item { transition: border-color .2s, box-shadow .2s; border-radius: 14px; }
+#diagnostics-list .diag-item:hover, #diagnostics-list .diag-item[open] { border-color: color-mix(in srgb, var(--primary) 45%, var(--border)); }
+#diagnostics-list .diag-item[open] { box-shadow: 0 7px 24px color-mix(in srgb, var(--primary) 7%, transparent); }
+#diagnostics-list summary { padding: 17px 18px; font-size: 14px; gap: 12px; min-height: 82px; }
+.diag-summary-text { display: grid; gap: 5px; text-wrap: pretty; }
+.diag-summary-text small { color: var(--primary); font-weight: 650; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
+#diagnostics-list summary > i { display: flex; flex: 0 0 18px; }
+#diagnostics-list .diag-content { padding: 0 18px 18px; font-size: 13px; line-height: 1.6; }
+#diagnostics-list .diag-content p { font-size: 13px; margin: 4px 0 0; color: var(--muted); }
+.diag-context { display: grid; gap: 13px; padding: 14px; border-radius: 11px; background: var(--surface2); border: 1px solid var(--border); }
+.diag-context .eyebrow { font-size: 9px; }
+.diag-context b { font-size: 12px; }
+.diag-plan-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 19px; }
+.diag-plan-head > span { font-size: 10px; color: var(--muted); }
+.diag-plan-head strong { white-space: nowrap; font-weight: 600; color: var(--primary); margin-left: 4px; }
+#diagnostics-list .diagnostic-steps { gap: 7px; margin: 12px 0; }
+#diagnostics-list .diagnostic-steps > li { padding: 0; border: 1px solid var(--border); border-radius: 10px; transition: background .18s; }
+#diagnostics-list .diagnostic-steps > li::before { display: none; }
+.diagnostic-steps label { display: flex; align-items: start; gap: 10px; cursor: pointer; padding: 11px 10px; font-weight: 400; margin: 0; line-height: 1.55; }
+.diagnostic-steps label input[type="checkbox"] { flex: 0 0 17px; width: 17px; height: 17px; margin: 2px 0 0; accent-color: var(--primary); }
+.diagnostic-steps label span { min-width: 0; }
+#diagnostics-list .step-checked { background: color-mix(in srgb, var(--primary) 7%, var(--surface)); }
+#diagnostics-list .step-checked label span { color: var(--muted); }
+#diagnostics-list .info-notice { margin: 12px 0; padding: 11px 13px; font-size: 12px; }
+#diagnostics-list .diag-content > .muted { display: block; font-size: 10px; }
+.diag-utilities { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.diag-utilities button { font-size: 11px; text-align: left; }
+#diagnostics-list .table-actions { border-top: 1px solid var(--border); padding-top: 14px; margin-top: 14px; gap: 8px; }
+#diagnostics-list .table-actions .btn { font-size: 12px; padding: 9px 11px; }
+#diagnostics-list .table-actions .link-btn { font-size: 11px; }
+.diag-empty { text-align: center; padding: 45px 18px; border: 1px dashed var(--border); border-radius: 16px; background: var(--surface); }
+.diag-empty > span { display: block; width: 32px; height: 32px; margin: 0 auto 15px; color: var(--primary); }
+.diag-empty h3 { margin: 8px 0; font-size: 18px; }
+.diag-empty p { color: var(--muted); font-size: 13px; }
+#video-review { min-width: 0; opacity: 1; transform: translateY(0); transition: opacity .18s, transform .18s; }
+#video-review.review-closing { opacity: 0; transform: translateY(8px); pointer-events: none; }
+#video-review .compact-review { margin: 14px 0; padding: 0; overflow: hidden; border-radius: 14px; }
+.review-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; }
+.review-toolbar > div:first-child { min-width: 0; }
+.review-toolbar .eyebrow { font-size: 9px; letter-spacing: .08em; }
+.review-toolbar h3 { margin: 5px 0 0; font-size: 14px; line-height: 1.45; }
+.review-actions { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
+.review-actions .icon-btn { width: 32px; min-height: 32px; height: 32px; }
+.review-actions .link-btn { font-size: 11px; display: inline-flex; align-items: center; gap: 5px; }
+.review-actions .link-btn > span:first-child { font-size: 18px; }
+.review-actions .icon-btn svg { width: 15px; height: 15px; }
+.review-body { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .24s ease, opacity .18s; }
+.review-body-inner { min-height: 0; overflow: hidden; padding: 0 16px; }
+.review-body-inner::after { content: ""; display: block; height: 14px; }
+.review-collapsed .review-body { grid-template-rows: 0fr; opacity: 0; }
+.review-overview { display: grid; gap: 16px; align-items: center; border-top: 1px solid var(--border); padding-top: 13px; }
+.review-overview.has-video { grid-template-columns: minmax(0, 280px) minmax(0, 1fr); }
+#video-review .review-overview video { width: 100%; height: 158px; max-height: 180px; object-fit: contain; border-radius: 9px; margin: 0; }
+#video-review .review-summary p { font-size: 12px; margin: 0; line-height: 1.6; color: var(--muted); }
+#video-review .risk-timeline { margin: 10px 0 0; gap: 6px; font-size: 11px; }
+#video-review .risk-marker { font-size: 11px; padding: 6px 9px; }
+.review-details { margin-top: 13px; border-top: 1px solid var(--border); }
+.review-details > summary { cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 12px 1px 0; font-size: 12px; font-weight: 650; color: var(--text); list-style: none; }
+.review-details > summary::after { content: "⌄"; margin-left: auto; color: var(--primary); }
+.review-details[open] > summary::after { content: "⌃"; }
+.review-details > summary::-webkit-details-marker { display: none; }
+.review-details > summary span { color: var(--muted); font-size: 10px; }
+.review-details > div { padding-top: 3px; }
+#video-review .review-details .risk-card { padding: 12px; margin: 10px 0; }
+#video-review .review-details .risk-card p, #video-review .review-details .risk-card b, #video-review .review-details .info-notice { font-size: 12px; }
+#video-review .review-details small { font-size: 11px; color: var(--muted); line-height: 1.6; overflow-wrap: anywhere; }
+#video-review .review-details .info-notice { margin-bottom: 10px; }
+@media (max-width: 760px) {
+  #diagnostics-list .diagnostic-grid { grid-template-columns: minmax(0, 1fr); }
+  .diagnostic-workspace { padding: 14px; }
+  .diagnostic-search-row { flex-wrap: wrap; align-items: center; }
+  .diagnostic-search-row label { flex-basis: 100%; }
+  .diagnostic-search-row > button { min-height: 36px; padding: 7px 11px; font-size: 11px; }
+  .diagnostic-status { flex-wrap: wrap; gap: 5px; }
+  #diagnostic-categories .category-card { padding: 8px 10px; gap: 6px; font-size: 12px; }
+  .review-overview.has-video { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  #video-review .review-overview video { height: 160px; }
+  .review-toolbar { padding: 12px; gap: 6px; }
+  .review-toolbar h3 { font-size: 12px; }
+  .review-actions { gap: 5px; }
+  .review-actions .link-btn > span:last-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .review-actions .link-btn { width: 30px; height: 32px; justify-content: center; }
+  .review-body-inner { padding: 0 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #video-review, .review-body, #diagnostics-list .diag-item { transition: none; }
+}

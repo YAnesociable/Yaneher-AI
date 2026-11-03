@@ -1,0 +1,27 @@
+
+#ai-cooldown{display:inline-block;min-height:20px; font-variant-numeric:tabular-nums}
+.school-overview{padding:16px!important;margin-bottom:14px!important}.school-overview p{display:none}.school-overview h3{font-size:15px}
+#floating-grip{display:none;border:0;background:transparent;padding:12px;width:100%;cursor:grab;touch-action:none}#floating-grip span{display:block;width:64px;height:5px;border-radius:10px;background:#969ba7;margin:auto}
+@media(min-width:1001px){.app[data-menu="floating"] #floating-grip{display:block}.app[data-menu="floating"] .sidebar{max-height:calc(100dvh - 24px);height:fit-content;z-index:60}}
+.theme-background-group{padding:16px;border:1px solid var(--border);border-radius:16px}.theme-background-group h4{margin:0 0 16px}.background-thumb[data-theme="light"]{background-color:#edf0fa!important;filter:saturate(.7) brightness(1.3)}
+.app .card,.app .dashboard-widget,.glass-specimen-card{border-color:var(--custom-outline,var(--border))!important;backdrop-filter:blur(var(--glass-blur));-webkit-backdrop-filter:blur(var(--glass-blur))}
+#visual-dock{margin:24px;padding:18px;border-radius:18px;border:1px solid var(--border);background:var(--surface);backdrop-filter:blur(var(--glass-blur));position:relative}#visual-dock[hidden]{display:none}#visual-links{display:flex;flex-wrap:wrap;gap:12px}#visual-links a{font-size:13px;padding:9px 12px;border:1px solid var(--border);border-radius:10px;color:var(--primary);text-decoration:none}#visual-bottom-zone{position:relative;min-height:200px;margin-top:16px}#visual-main-zone{position:relative;min-height:0}#visual-main-zone:has(>*),.visual-editing #visual-main-zone{min-height:520px;margin:24px 0}.topbar{position:relative}
+.visual-editing:after{content:'';position:fixed;inset:0;background:#080b20aa;z-index:70;pointer-events:none}.visual-editing .topbar,.visual-editing #visual-main-zone,.visual-editing #visual-dock,.visual-editing .dashboard-widget{z-index:71;position:relative}.visual-editing .topbar,.visual-editing #visual-main-zone,.visual-editing #visual-bottom-zone{outline:2px dashed #a79af4;outline-offset:-3px;min-height:130px;background:var(--surface)}.visual-editing .layout-toolbar{z-index:80;position:sticky;top:0}.visual-movable{outline:2px solid #ab9bff!important;cursor:grab!important;touch-action:none}.visual-movable:focus{outline:3px solid #7ce0cd!important}
+@media(max-width:700px){#visual-dock{margin:12px;padding:12px}.visual-editing .layout-toolbar{flex-wrap:wrap}.theme-background-group{padding:10px}.background-choices{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@supports not (backdrop-filter:blur(1px)){.app .card,.app .sidebar{background:var(--surface-solid)!important}}
+
+
+/* The card samples and large preview use the exact ambient renderer. */
+.background-thumb:has(canvas){padding:0!important;position:relative;overflow:hidden;background:none!important;filter:none!important}
+.background-thumb canvas{display:block;width:100%;height:100%}.background-thumb:has(canvas)::before,.background-thumb:has(canvas)::after{display:none!important}
+.custom-preview:has(.live-preview-canvas){position:relative;isolation:isolate;background:none!important;overflow:hidden}.live-preview-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1}.custom-preview:has(.live-preview-canvas)::before,.custom-preview:has(.live-preview-canvas)::after{display:none!important}
+#visual-main-zone{margin:0 24px}#visual-main-zone:has(>*),.visual-editing #visual-main-zone{margin:20px 24px;min-height:360px}
+@media(max-width:699px){#visual-main-zone{display:none}.visual-editing #visual-main-zone{display:block;min-height:360px;margin:12px}.visual-editing .topbar{min-height:160px}.visual-editing .visual-movable{max-width:calc(100vw - 48px)}}
+
+.visual-editing #visual-main-zone::before,.visual-editing #visual-bottom-zone::before{content:attr(data-zone-label);position:absolute;left:14px;top:10px;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--muted);pointer-events:none}
+
+#visual-links small{display:block;opacity:.75;font-size:11px;margin-top:2px}
+#visual-placement-controls{display:flex;align-items:end;gap:10px;flex-wrap:wrap;width:100%}
+#visual-placement-controls label{display:grid;gap:5px;flex:1;min-width:130px;font-size:11px;color:var(--muted)}
+#visual-placement-controls select{width:100%;min-height:38px;border:1px solid var(--border);border-radius:9px;background:var(--surface-solid);color:var(--text);padding:7px;font:inherit}
+.visual-editing #layout-toolbar{flex-wrap:wrap}.visual-editing #visual-main-zone{display:block}
