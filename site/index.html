@@ -1,51 +1,584 @@
-<!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f7fd"><title>YaneCLIBB — Community</title><meta name="description" content="Yaneher Community: общение, ЯнеИИ, школа монтажа и статистика нарезчиков."><link rel="stylesheet" href="assets/v11.css"><script src="config.js"></script><script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script><script defer src="assets/v11.js"></script></head>
-<body><div id="app" class="app">
-  <aside class="sidebar" id="sidebar" aria-label="Навигация">
-    <div class="brand"><div class="brandmark">Y</div><div class="brandtext"><strong>YaneCLIBB</strong><span data-i18n="tagline">КРЕАТОР ПЛАТФОРМА</span></div><button class="icon-btn mobile-close" id="side-close" title="Закрыть меню">✕</button></div>
-    <nav id="nav">
-      <button data-nav="home" class="nav-active"><span class="nav-icon">⌂</span><span data-i18n="navHome">Главная</span></button>
-      <button data-nav="ai"><span class="nav-icon">✦</span><span data-i18n="navAI">ЯнеИИ</span></button>
-      <button data-nav="school"><span class="nav-icon">✂</span><span data-i18n="navSchool">Школа монтажа</span></button>
-      <button data-nav="diagnostics"><span class="nav-icon">◇</span><span data-i18n="navDiagnose">Диагностика</span></button>
-      <button data-nav="videos"><span class="nav-icon">▣</span><span data-i18n="navVideos">Видео</span></button>
-      <button data-nav="clippers"><span class="nav-icon">♧</span><span data-i18n="navClippers">Нарезчики</span></button>
-      <button data-nav="chat"><span class="nav-icon">▤</span><span data-i18n="navChat">Общий чат</span><span class="nav-count" id="chat-badge" hidden></span></button>
-      <button data-nav="stats"><span class="nav-icon">▥</span><span data-i18n="navStats">Календарь и статистика</span></button>
-      <button data-nav="rules"><span class="nav-icon">≡</span><span data-i18n="navRules">Правила</span></button>
-      <button data-nav="admin" class="admin-only" hidden><span class="nav-icon">⚙</span><span data-i18n="navAdmin">Управление</span></button>
-    </nav>
-    <div class="side-bottom"><div class="side-status"><span class="live-dot"></span><span id="connection-status">Подключение к сообществу…</span></div><button class="user-mini" id="side-account"><div class="small-avatar" id="side-avatar">Y</div><span><b id="side-username">Гость</b><small id="side-role">Войдите в аккаунт</small></span><span>›</span></button></div>
-  </aside>
-  <div class="scrim" id="scrim" hidden></div>
-  <div class="workspace"><header class="topbar">
-      <div class="top-left"><button class="icon-btn hamburger" id="menu-toggle" aria-label="Открыть меню">☰</button><div class="search-wrap"><span>⌕</span><input id="global-search" placeholder="Поиск по разделам и материалам…" aria-label="Поиск"><kbd>Ctrl K</kbd></div></div>
-      <div class="top-right"><button class="icon-btn" id="updates-button" title="Обновления сайта">✎<i class="notification-dot" id="release-dot" hidden></i></button><button class="icon-btn" id="theme-toggle" title="Сменить тему">☾</button><select id="language-select" title="Язык"><option value="ru">🇷🇺 RU</option><option value="uk">🇺🇦 UA</option><option value="en">🇬🇧 EN</option></select><button class="account-pill" id="account-button"><span class="small-avatar" id="top-avatar">Y</span><span id="top-account-label">Войти</span></button><button class="btn brand-button" id="create-button">＋ <span data-i18n="createContent">Предложить видео</span></button></div>
-    </header>
-    <main id="content">
-      <section class="screen active" id="screen-home">
-        <div class="hero"><div class="hero-content"><div class="eyebrow">✦ YaneAI / AI CREATOR ASSISTANT</div><h1><span data-i18n="heroTitle">Спроси</span> <em>YaneAI</em></h1><p data-i18n="heroText">Твой помощник по TikTok, Shorts, монтажу, дизайну, аналитике и созданию нарезок. Конкретные советы и пошаговые инструкции.</p><div class="hero-chips"><span>▶ YouTube</span><span>♪ TikTok</span><span>✂ CapCut</span><span>▥ Premiere Pro</span></div><button class="btn btn-primary" data-go="ai" data-i18n="askAI">Спросить ЯнеИИ →</button></div><div class="bot-art" aria-hidden="true"><div class="orbit one"></div><div class="orbit two"></div><div class="bot-head"><div class="bot-face">⌒ ◡ ⌒</div></div><div class="bot-body">Y</div><div class="bot-note n1">✦ Идеи для видео</div><div class="bot-note n2">✂ Монтаж</div></div></div>
-        <div class="home-grid"><div class="home-main">
-          <div class="section-label"><h2 data-i18n="fastActions">Быстрые действия</h2></div>
-          <div class="quick-grid"><button class="quick q1" data-go="ai"><span>✦</span><div><b data-i18n="navAI">ЯнеИИ</b><small data-i18n="quickAI">Разбор и советы по монтажу</small></div><i>↗</i></button><button class="quick q2" data-go="school"><span>✂</span><div><b data-i18n="navSchool">Школа монтажа</b><small data-i18n="quickSchool">Уроки и эффекты</small></div><i>↗</i></button><button class="quick q3" data-go="stats"><span>▥</span><div><b data-i18n="navStats">Календарь и статистика</b><small data-i18n="quickStats">Твой прогресс</small></div><i>↗</i></button><button class="quick q4" data-go="chat"><span>▤</span><div><b data-i18n="navChat">Общий чат</b><small data-i18n="quickChat">Помощь нарезчиков</small></div><i>↗</i></button></div>
-          <div class="section-label"><h2 data-i18n="navVideos">Видео</h2><button class="text-button" data-go="videos" data-i18n="showAll">Смотреть все →</button></div><div class="cards-grid" id="home-videos"><div class="empty">Подборка появится после публикации видео администраторами.</div></div>
-        </div><div class="home-rail"><div class="card featured-panel"><div class="rail-heading"><span>▥ <b data-i18n="yourProgress">Твой прогресс</b></span></div><p id="home-progress-title">Войдите, чтобы увидеть личную статистику.</p><div class="big-stat" id="home-progress-value">—</div><div class="progress-track"><div id="home-progress-bar"></div></div><button class="btn btn-secondary full" data-go="stats" data-i18n="openCalendar">Открыть календарь</button></div><div class="card"><div class="rail-heading"><b>Yaneher / Community</b></div><a href="https://t.me/yaneher" target="_blank" rel="noopener noreferrer" class="social-link">✈ <span>Telegram Yaneher<small>Официальный канал</small></span>↗</a><a href="https://t.me/yaneher_narezki" target="_blank" rel="noopener noreferrer" class="social-link">▤ <span>Telegram нарезчиков<small>Помощь и правила</small></span>↗</a><a href="https://www.twitch.tv/yaneher" target="_blank" rel="noopener noreferrer" class="social-link">▣ <span>Twitch Yaneher<small>Прямые эфиры</small></span>↗</a><a id="insert-download" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary full" hidden>↓ Скачать вставку</a><p class="fineprint">⚠️ ВНИМАНИЕ! Возможны изменения. Условия партнёрства могут измениться.</p></div></div></div>
-      </section>
-      <section class="screen" id="screen-ai"><div class="page-head"><span class="eyebrow">✦ AI CREATOR ASSISTANT</span><h1 data-i18n="aiTitle">ЯнеИИ — твой помощник</h1><p data-i18n="aiSubtitle">Спроси об эффектах, монтаже, музыке, просмотрах и загрузи фото для разбора.</p></div><div class="card ai-panel"><div class="panel-title"><div class="small-avatar ai-avatar">Y</div><div><b>YaneAI</b><small id="ai-status">Gemini API</small></div><span class="hint-pill">Gemini</span></div><div class="ai-messages" id="ai-messages" aria-live="polite"><div class="ai-answer"><b>ЯнеИИ ✦</b><p>Привет! Спроси меня о монтаже или нарезках. Для общения войди в аккаунт.</p></div></div><div class="ai-attachment" id="ai-attachment" hidden></div><div class="composer"><label class="attach-button" title="Прикрепить изображение">📎<input type="file" id="ai-file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" hidden></label><textarea id="ai-question" rows="2" placeholder="Задай вопрос — отвечу пошагово…" maxlength="4500"></textarea><button class="btn btn-primary" id="ai-send" data-i18n="send">Отправить</button></div><div class="composer-foot"><span id="ai-cooldown">Для ЯнеИИ требуется аккаунт. Ограничение: 1 запрос в 60 секунд.</span><button class="link-btn" id="ai-clear">Очистить историю</button></div><p class="fineprint" id="ai-disclosure">Загруженные изображения передаются Google Gemini API для анализа. Полное видео и звук пока не передаются: текущая версия не выдаёт анализ нескольких кадров за просмотр всего ролика.</p></div></section>
-      <section class="screen" id="screen-school"><div class="page-head"><span class="eyebrow">✂ CREATOR SCHOOL</span><h1 data-i18n="navSchool">Школа монтажа</h1><p data-i18n="schoolSub">Подробные уроки для начинающих и опытных нарезчиков.</p></div><div class="filter-row"><input id="school-search" class="field-search" placeholder="Найти урок…"><select id="school-category"><option value="all">Все направления</option></select><select id="school-level"><option value="all">Любой уровень</option><option value="beginner">Начальный</option><option value="intermediate">Средний</option><option value="advanced">Продвинутый</option></select></div><div class="cards-grid" id="lessons-list"></div></section>
-      <section class="screen" id="screen-diagnostics"><div class="page-head"><span class="eyebrow">◇ TROUBLESHOOTING</span><h1 data-i18n="navDiagnose">Диагностика</h1><p data-i18n="diagnoseSub">Найди проблему и получи конкретные шаги её решения.</p></div><div class="filter-row"><input id="diagnosis-search" class="field-search" placeholder="Почему мало просмотров? Как улучшить звук?…"></div><div id="diagnostics-list"></div></section>
-      <section class="screen" id="screen-videos"><div class="page-head split-head"><div><span class="eyebrow">▣ COMMUNITY SELECTION</span><h1 data-i18n="navVideos">Видео</h1><p data-i18n="videosSub">Подборка реальных нарезок, одобренных администрацией.</p></div><button class="btn btn-primary" id="propose-video" data-i18n="proposeVideo">＋ Предложить видео</button></div><div class="cards-grid" id="featured-videos"></div><div class="card" id="my-submissions-card" hidden><h3>Мои заявки</h3><div id="my-submissions"></div></div></section>
-      <section class="screen" id="screen-clippers"><div class="page-head"><span class="eyebrow">♧ TEAM</span><h1 data-i18n="navClippers">Нарезчики</h1><p data-i18n="clippersSub">Основной состав, связанный с настоящими аккаунтами.</p></div><div class="card mini-capacity"><b data-i18n="occupiedSeats">Места в основе</b><strong id="clippers-capacity">— / 10</strong></div><div class="cards-grid" id="clippers-list"></div></section>
-      <section class="screen" id="screen-chat"><div class="page-head"><span class="eyebrow">▤ LIVE COMMUNITY</span><h1 data-i18n="navChat">Общий чат</h1><p data-i18n="chatSub">Сообщения синхронизируются через Supabase. Возле каждого сообщения есть кнопка жалобы.</p></div><div class="card chat-card"><div class="panel-title"><b>Общий чат Yaneher</b><span class="hint-pill" id="chat-status">OFFLINE</span></div><div class="chat-stream" id="chat-stream"><div class="empty">Для общения войди в аккаунт.</div></div><button class="btn btn-secondary full" id="older-chat" hidden>↑ Загрузить предыдущие сообщения</button><div class="chat-reply" id="chat-reply" hidden></div><div class="composer"><textarea id="chat-input" maxlength="1000" rows="2" placeholder="Написать сообщение…"></textarea><button class="btn btn-primary" id="chat-send" data-i18n="send">Отправить</button></div><p class="fineprint" id="chat-warning">Интервал между сообщениями: 5 секунд (для пользователей).</p></div></section>
-      <section class="screen" id="screen-stats"><div class="page-head"><span class="eyebrow">▥ MY PROGRESS</span><h1 id="stats-title">Путь к 500 000 просмотров</h1><p id="stats-hint">⚠️ В статистику засчитываются только видео от 5 000 просмотров.</p></div><div class="stat-cards" id="stat-summary"></div><div class="card"><div class="panel-title"><b data-i18n="calendar">Календарь</b><div class="month-selector"><button class="icon-btn" id="prev-month">‹</button><span id="month-title"></span><button class="icon-btn" id="next-month">›</button></div></div><div class="calendar-week"><b>Пн</b><b>Вт</b><b>Ср</b><b>Чт</b><b>Пт</b><b>Сб</b><b>Вс</b></div><div class="calendar-days" id="calendar-days"></div></div><div class="card"><h3 id="stats-form-title">Добавить опубликованный ролик</h3><form id="stat-form" class="grid-form"><input type="hidden" id="stat-id"><label>Название ролика<input id="stat-name" required maxlength="120" placeholder="Моя нарезка"></label><label>Дата публикации<input id="stat-date" type="date" required></label><label>Просмотры<input id="stat-views" type="number" min="0" max="10000000000" step="1" required></label><label>Ссылка на оригинал (необязательно)<input id="stat-url" type="url" placeholder="https://..."></label><div class="form-actions"><button class="btn btn-primary" type="submit">Сохранить запись</button><button type="button" class="btn btn-secondary" id="stat-clear">Сбросить</button></div></form><div class="notice" id="stat-import" hidden><b>Найдены записи из старой версии v10</b><p>Можно перенести свои локальные записи в аккаунт. Перед импортом проверь их.</p><button class="btn btn-secondary" id="import-legacy">Импортировать мои записи</button></div></div><div class="card"><h3>Мои видео и просмотры</h3><div id="stats-journal"></div></div></section>
-      <section class="screen" id="screen-rules"><div class="page-head"><span class="eyebrow">≡ COMMUNITY RULES</span><h1 data-i18n="navRules">Правила</h1><p data-i18n="rulesSub">Подтверждённые правила и дополнительные положения сообщества.</p></div><div id="rules-boxes" class="cards-grid"></div><div class="card" id="rules-banner" hidden><h3>Баннер правил</h3><img id="rules-image" alt="Утверждённый баннер" class="banner-image"><a class="btn btn-secondary" id="rules-download">↓ Скачать разрешённый баннер</a></div></section>
-      <section class="screen" id="screen-profile"><div class="page-head"><h1 data-i18n="profile">Профиль</h1></div><div id="profile-detail"></div><div class="card" id="profile-editor" hidden><h3>Настройки моего профиля</h3><form id="profile-form" class="grid-form"><label>Уникальный никнейм<input id="profile-name" required pattern="[a-zA-Z0-9_]{3,24}"></label><label>URL аватарки (HTTPS)<input type="url" id="profile-avatar" placeholder="https://..."></label><label>TikTok URL<input type="url" id="profile-tiktok" placeholder="https://..."></label><label>Telegram URL<input type="url" id="profile-telegram" placeholder="https://..."></label><button class="btn btn-primary" type="submit">Сохранить профиль</button></form><button class="btn btn-secondary" id="signout">Выйти из аккаунта</button></div></section>
-      <section class="screen" id="screen-admin"><div class="page-head"><span class="eyebrow">⚙ COMMUNITY CONTROL</span><h1 data-i18n="navAdmin">Управление</h1><p>Раздел доступен только администраторам. Действия защищены серверными правами.</p></div><div class="admin-tabs" id="admin-tabs"><button class="active" data-tab="reports">🚩 Жалобы</button><button data-tab="users">👥 Люди</button><button data-tab="submissions">▣ Заявки</button><button data-tab="releases">✎ Обновления</button><button data-tab="lessons">✂ Уроки</button><button data-tab="settings">⚙ Настройки</button><button data-tab="logs">📋 Логи</button></div><div id="admin-content"></div></section>
-    </main>
-  </div>
-  <dialog id="auth-dialog" class="modal"><form method="dialog"><button class="modal-close" aria-label="Закрыть">✕</button></form><div class="dialog-heading"><div class="brandmark">Y</div><div><h2>Аккаунт YaneCLIBB</h2><p>Один аккаунт для чата, ЯнеИИ и статистики.</p></div></div><div class="tab-switch"><button type="button" class="active" data-authmode="login">Войти</button><button type="button" data-authmode="signup">Регистрация</button><button type="button" data-authmode="reset">Восстановить</button></div><form id="auth-form" class="stack-form"><label id="auth-nickname-label" hidden>Уникальный никнейм<input id="auth-nickname" placeholder="YaneClipper" minlength="3" maxlength="24" pattern="[a-zA-Z0-9_]{3,24}"></label><label>Email <input id="auth-email" type="email" autocomplete="email" required></label><label id="auth-password-label">Пароль<input id="auth-password" type="password" minlength="8" autocomplete="current-password" required></label><label id="auth-confirm-label" hidden>Повтор пароля<input id="auth-confirm" type="password" minlength="8" autocomplete="new-password"></label><button class="btn btn-primary full" id="auth-submit" type="submit">Войти</button><p class="fineprint" id="auth-help">Email нужен для безопасного восстановления пароля.</p></form></dialog>
-  <dialog id="report-dialog" class="modal"><form method="dialog"><button class="modal-close" aria-label="Закрыть">✕</button></form><h2>🚩 Жалоба на сообщение</h2><p>Администраторы увидят сообщение, причину и отправителя жалобы.</p><form class="stack-form" id="report-form"><input type="hidden" id="report-message-id"><label>Причина<select id="report-reason"><option value="Спам">Спам</option><option value="Оскорбления">Оскорбления</option><option value="Нарушение правил">Нарушение правил</option><option value="Запрещённый контент">Запрещённый контент</option><option value="Другое">Другое</option></select></label><label>Комментарий (необязательно)<textarea id="report-comment" maxlength="180" rows="3"></textarea></label><button type="submit" class="btn btn-primary">Отправить жалобу</button></form></dialog>
-  <dialog id="submission-dialog" class="modal"><form method="dialog"><button class="modal-close" aria-label="Закрыть">✕</button></form><h2>▣ Предложить своё видео</h2><p>Для публикации отправь оригинальную HTTPS-ссылку. Видео появится после одобрения.</p><form id="submission-form" class="stack-form"><label>Название<input name="title" required minlength="3" maxlength="120"></label><label>Ссылка на видео<input name="source_url" type="url" placeholder="https://..." required></label><label>Кому принадлежит ролик<input name="author_credit" required minlength="2" maxlength="100"></label><label>Описание<textarea name="description" rows="3" maxlength="800"></textarea></label><button class="btn btn-primary" type="submit">Отправить на рассмотрение</button></form></dialog>
-  <dialog id="updates-dialog" class="modal wide-modal"><form method="dialog"><button class="modal-close" aria-label="Закрыть">✕</button></form><h2>✎ История обновлений</h2><div id="updates-list"><div class="empty">После подключения Supabase здесь появятся опубликованные версии.</div></div></dialog>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-</div></body></html>
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="#f5f7fd" name="theme-color"/>
+<title>YaneCLIBB — Creator Community</title>
+<meta content="Yaneher Community: общение, ЯнеИИ, школа монтажа и статистика нарезчиков." name="description"/>
+<link href="assets/v12.css" rel="stylesheet"/>
+<link href="assets/v122.css" rel="stylesheet"/>
+<link href="assets/i18n-v123.css" rel="stylesheet"/>
+<link href="assets/customization-v123.css" rel="stylesheet"/>
+<link href="assets/ai-diagnostics-v123.css" rel="stylesheet"/>
+<link href="assets/profile-v123.css" rel="stylesheet"/>
+<script>
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem("ycl-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      } catch {}
+    </script>
+<script src="config.js"></script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script defer="" src="assets/i18n.js"></script>
+<script defer="" src="assets/lessons.js"></script>
+<script defer="" src="assets/background.js"></script>
+<script defer="" src="assets/v12.js"></script>
+<link href="assets/v124.css" rel="stylesheet"/>
+<link href="assets/v125.css" rel="stylesheet"/>
+<link href="assets/v126.css" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/v127.css">
+</head>
+<body>
+<div class="app" id="app">
+<aside aria-label="Навигация" class="sidebar" id="sidebar">
+<div class="brand">
+<div class="brandmark">Y</div>
+<div class="brandtext"><strong>YaneCLIBB <small class="brand-beta" translate="no">BETA</small></strong><span data-i18n="tagline">КРЕАТОР ПЛАТФОРМА</span></div>
+<button class="icon-btn mobile-close" id="side-close" title="Закрыть меню">✕</button>
+</div>
+<nav id="nav">
+<button class="nav-active" data-nav="home">
+<span class="nav-icon">⌂</span><span data-i18n="navHome">Главная</span>
+</button>
+<button data-nav="ai"><span class="nav-icon">✦</span><span data-i18n="navAI">ЯнеИИ</span></button>
+<button data-nav="rules"><span class="nav-icon">≡</span><span data-i18n="navRules">Правила</span></button>
+<button data-nav="chat">
+<span class="nav-icon">▤</span><span data-i18n="navChat">Общий чат</span><span class="nav-count" hidden="" id="chat-badge"></span>
+</button>
+<button data-nav="school">
+<span class="nav-icon">✂</span><span data-i18n="navSchool">Школа монтажа</span>
+</button>
+<button data-nav="diagnostics">
+<span class="nav-icon">◇</span><span data-i18n="navDiagnose">Диагностика</span>
+</button>
+<button data-nav="videos"><span class="nav-icon">▣</span><span data-i18n="navVideos">Видео</span></button>
+<button data-nav="clippers">
+<span class="nav-icon">♧</span><span data-i18n="navClippers">Нарезчики</span>
+</button>
+<button data-nav="stats">
+<span class="nav-icon">▥</span><span data-i18n="navStats">Календарь и статистика</span>
+</button>
+<button id="open-about" type="button" aria-haspopup="dialog" aria-controls="about-dialog" title="О сайте"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></svg></span><span>О сайте</span></button>
+<button data-nav="admin"><span class="nav-icon">⚙</span><span data-i18n="navAdmin">Управления</span></button>
+</nav>
+<div class="side-bottom">
+<button aria-haspopup="dialog" class="btn btn-secondary" id="open-customization">
+            ✦ <span>Кастомизация</span> <span class="beta-pill">BETA</span></button><button class="btn btn-secondary" id="open-bug">⚑ Сообщить об ошибке</button>
+<div class="side-status">
+<span class="live-dot"></span><span id="connection-status">Подключение к сообществу…</span>
+</div>
+</div>
+</aside>
+<div class="scrim" hidden="" id="scrim"></div>
+<div class="workspace">
+<header class="topbar">
+<div class="top-left">
+<button aria-label="Открыть меню" class="icon-btn hamburger" id="menu-toggle">☰</button><span class="top-context">Yaneher <span>/ Community</span></span>
+</div>
+<div class="top-right">
+<button aria-label="Уведомления" class="icon-btn" id="notification-bell" title="Уведомления">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="22">
+<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"></path>
+<path d="M10 21h4"></path></svg><span class="unread-count" hidden="" id="unread-count"></span></button><button class="icon-btn" id="updates-button" title="Обновления сайта">
+              ✎<i class="notification-dot" hidden="" id="release-dot"></i></button><button class="icon-btn" id="theme-toggle" title="Сменить тему">☾</button>
+<details class="language-picker" id="language-picker">
+<summary aria-label="Выбрать язык" id="language-current"></summary>
+<div class="language-options">
+<button data-language="ru"><i class="flag flag-ru"></i>RU</button><button data-language="uk"><i class="flag flag-uk"></i>UA</button><button data-language="en"><i class="flag flag-en"></i>EN</button>
+</div>
+</details>
+<button class="account-pill" id="account-button">
+<span class="small-avatar" id="top-avatar">Y</span><span id="top-account-label">Войти</span></button><button class="btn brand-button" id="create-button">
+              ＋ <span data-i18n="createContent">Предложить видео</span>
+</button>
+</div>
+</header>
+<div class="sanction-banner" hidden="" id="sanction-banner"></div>
+<div class="layout-toolbar" hidden="" id="layout-toolbar">
+<div><b>Режим конструктора</b><small>Перетаскивай за ручку или используй ↑ ↓</small></div>
+<div>
+<button class="btn btn-secondary" data-open-custom="widgets">Виджеты</button><button class="btn btn-secondary" data-cancel-custom="">Отмена</button><button class="btn btn-primary" data-apply-custom="">Сохранить</button>
+</div>
+</div>
+<span aria-live="polite" class="sr-only" id="layout-announcement"></span>
+<main id="content">
+<section class="screen active" id="screen-home">
+<div class="hero">
+<div class="hero-content">
+<div class="eyebrow">✦ YaneAI / AI CREATOR ASSISTANT</div>
+<h1><span data-i18n="heroTitle">Спроси</span> <em>YaneAI</em></h1>
+<p data-i18n="heroText">
+                  Твой помощник по TikTok, Shorts, монтажу, дизайну, аналитике и созданию нарезок. Конкретные советы и
+                  пошаговые инструкции.
+                </p>
+<div class="hero-chips">
+<span>▶ YouTube</span><span>♪ TikTok</span><span>✂ CapCut</span><span>▥ Premiere Pro</span>
+</div>
+<button class="btn btn-primary" data-go="ai" data-i18n="askAI">Спросить ЯнеИИ →</button>
+</div>
+<div aria-hidden="true" class="ai-core-art">
+<div class="core-orbit orbit-a"></div>
+<div class="core-orbit orbit-b"></div>
+<div class="core-orbit orbit-c"></div>
+<div class="core-center">✦</div>
+<span class="core-label">YANEAI · CREATIVE INTELLIGENCE</span>
+</div>
+</div>
+<div class="live-counters" id="live-counters">
+<span>Данные сообщества появятся после подключения</span>
+</div>
+<div class="home-grid">
+<div class="home-main">
+<div class="section-label"><h2 data-i18n="fastActions">Быстрые действия</h2></div>
+<div class="quick-grid">
+<button class="quick q1" data-go="ai">
+<span>✦</span>
+<div>
+<b data-i18n="navAI">ЯнеИИ</b><small data-i18n="quickAI">Разбор и советы по монтажу</small>
+</div>
+<i>↗</i></button><button class="quick q2" data-go="school">
+<span>✂</span>
+<div>
+<b data-i18n="navSchool">Школа монтажа</b><small data-i18n="quickSchool">Уроки и эффекты</small>
+</div>
+<i>↗</i></button><button class="quick q3" data-go="stats">
+<span>▥</span>
+<div>
+<b data-i18n="navStats">Календарь и статистика</b><small data-i18n="quickStats">Твой прогресс</small>
+</div>
+<i>↗</i></button><button class="quick q4" data-go="chat">
+<span>▤</span>
+<div>
+<b data-i18n="navChat">Общий чат</b><small data-i18n="quickChat">Помощь нарезчиков</small>
+</div>
+<i>↗</i>
+</button>
+</div>
+<div class="section-label">
+<h2 data-i18n="navVideos">Видео</h2>
+<button class="text-button" data-go="videos" data-i18n="showAll">Смотреть все →</button>
+</div>
+<div class="cards-grid" id="home-videos">
+<div class="empty">Подборка появится после публикации видео администраторами.</div>
+</div>
+</div>
+<div class="home-rail">
+<div class="card featured-panel">
+<div class="rail-heading">
+<span>▥ <b data-i18n="yourProgress">Твой прогресс</b></span>
+</div>
+<p id="home-progress-title">Войдите, чтобы увидеть личную статистику.</p>
+<div class="big-stat" id="home-progress-value">—</div>
+<div class="progress-track"><div id="home-progress-bar"></div></div>
+<button class="btn btn-secondary full" data-go="stats" data-i18n="openCalendar">
+                    Открыть календарь
+                  </button>
+</div>
+<div class="card">
+<div class="rail-heading"><b>Yaneher / Community</b></div>
+<a class="social-link" href="https://t.me/yaneher" rel="noopener noreferrer" target="_blank">✈ <span>Telegram Yaneher<small>Официальный канал</small></span>↗</a><a class="social-link" href="https://t.me/yaneher_narezki" rel="noopener noreferrer" target="_blank">▤ <span>Telegram нарезчиков<small>Помощь и правила</small></span>↗</a><a class="social-link" href="https://www.twitch.tv/yaneher" rel="noopener noreferrer" target="_blank">▣ <span>Twitch Yaneher<small>Прямые эфиры</small></span>↗</a><a class="drive-link" href="https://drive.google.com/drive/folders/1VRVZwEFdK1id3qVJNVA6cGQT5Imo6dOR?hl=ru" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" viewbox="0 0 24 24">
+<path d="m8 2 5 8-7 12H0L8 8Z" fill="#0F9D58"></path>
+<path d="m8 2 8 0 8 14h-9Z" fill="#F4B400"></path>
+<path d="m6 22 5-8h13l-4 8Z" fill="#4285F4"></path></svg><span>Архив всех стримов Янехера<small>Google Drive · исходники для нарезок</small></span><b>↗</b></a><a class="btn btn-secondary full" hidden="" href="#" id="insert-download" rel="noopener noreferrer" target="_blank">↓ Скачать вставку</a>
+<p class="fineprint">⚠️ ВНИМАНИЕ! Возможны изменения. Условия партнёрства могут измениться.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="screen" id="screen-ai">
+<div class="page-head">
+<span class="eyebrow">✦ AI CREATOR ASSISTANT</span>
+<h1 data-i18n="aiTitle">ЯнеИИ — твой помощник</h1>
+<p data-i18n="aiSubtitle">Спроси об эффектах, монтаже, музыке, просмотрах и загрузи фото для разбора.</p>
+</div>
+<div class="card ai-panel">
+<div class="panel-title ai-live-title">
+<span aria-hidden="true" class="mini-ai-core" data-ai-core="">✦</span>
+<div class="ai-live-meta">
+<b>YaneAI</b><small aria-live="polite" id="ai-live-label">Готов к запросу</small><small id="ai-status">Gemini API</small>
+</div>
+<span class="ai-state-pill" id="ai-state-pill">Готов к запросу</span>
+</div>
+<div class="analysis-live" hidden="" id="analysis-live">
+<ol class="analysis-stages">
+<li data-analysis-phase="upload"><i>1</i> Загрузка</li>
+<li data-analysis-phase="analysis"><i>2</i> Анализ</li>
+<li data-analysis-phase="result"><i>3</i> Подготовка результата</li>
+</ol>
+<p class="analysis-stage-detail" id="analysis-stage-detail"></p>
+</div>
+<div aria-live="polite" class="ai-messages" id="ai-messages">
+<div class="ai-answer">
+<b>ЯнеИИ ✦</b>
+<p>Привет! Спроси меня о монтаже или нарезках. Для общения войди в аккаунт.</p>
+</div>
+</div>
+<div class="ai-starters" id="ai-starters"></div>
+<button class="new-messages" hidden="" id="ai-new-messages">↓ Новые сообщения</button>
+<div hidden="" id="video-review"></div>
+<label class="analysis-mode">Анализ видео<select id="analysis-mode">
+<option value="both">Монтаж + авторские риски</option>
+<option value="full">Только монтаж</option>
+<option value="copyright">Только авторские риски</option>
+</select></label>
+<div class="ai-attachment" hidden="" id="ai-attachment"></div>
+<div class="composer">
+<label class="attach-button" title="Прикрепить изображение">📎<input accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" hidden="" id="ai-file" type="file"/></label><textarea id="ai-question" maxlength="4500" placeholder="Задай вопрос — отвечу пошагово…" rows="2"></textarea><button class="btn btn-primary" data-i18n="send" id="ai-send">Отправить</button>
+</div>
+<div class="composer-foot">
+<span id="ai-cooldown">Для ЯнеИИ требуется аккаунт. Ограничение: 1 запрос в 15 секунд.</span><button class="link-btn" id="ai-clear">Очистить историю</button>
+</div>
+<p class="fineprint" id="ai-disclosure">
+                Загруженные изображения передаются Google Gemini API для анализа. Полное видео и звук пока не
+                передаются: текущая версия не выдаёт анализ нескольких кадров за просмотр всего ролика.
+              </p>
+</div>
+</section>
+<section class="screen" id="screen-school">
+<div class="page-head">
+<span class="eyebrow">✂ CREATOR SCHOOL</span>
+<h1 data-i18n="navSchool">Школа монтажа</h1>
+<p data-i18n="schoolSub">Подробные уроки для начинающих и опытных нарезчиков.</p>
+</div>
+<div class="school-overview" id="school-overview"></div><div class="filter-row">
+<select id="school-category">
+<option value="all">Все направления</option></select><select id="school-level">
+<option value="all">Любой уровень</option>
+<option value="beginner">Начальный</option>
+<option value="intermediate">Средний</option>
+<option value="advanced">Продвинутый</option>
+</select>
+</div>
+<div class="cards-grid" id="lessons-list"></div>
+</section>
+<section class="screen" id="screen-diagnostics">
+<div class="page-head">
+<span class="eyebrow">◇ TROUBLESHOOTING</span>
+<h1 data-i18n="navDiagnose">Диагностика</h1>
+<p data-i18n="diagnoseSub">Найди проблему и получи конкретные шаги её решения.</p>
+</div>
+<div class="diagnostic-categories" id="diagnostic-categories"></div>
+<div id="diagnostics-list"></div>
+</section>
+<section class="screen" id="screen-videos">
+<div class="page-head split-head">
+<div>
+<span class="eyebrow">▣ COMMUNITY SELECTION</span>
+<h1 data-i18n="navVideos">Видео</h1>
+<p data-i18n="videosSub">Подборка реальных нарезок, одобренных администрацией.</p>
+</div>
+<button class="btn btn-primary" data-i18n="proposeVideo" id="propose-video">＋ Предложить видео</button>
+</div>
+<a class="drive-link" href="https://drive.google.com/drive/folders/1VRVZwEFdK1id3qVJNVA6cGQT5Imo6dOR?hl=ru" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" viewbox="0 0 24 24">
+<path d="m8 2 5 8-7 12H0L8 8Z" fill="#0F9D58"></path>
+<path d="m8 2 8 0 8 14h-9Z" fill="#F4B400"></path>
+<path d="m6 22 5-8h13l-4 8Z" fill="#4285F4"></path></svg><span>Архив всех стримов Янехера<small>Google Drive · исходники для нарезок</small></span><b>↗</b></a>
+<div class="cards-grid" id="featured-videos"></div>
+<div class="card" hidden="" id="my-submissions-card">
+<h3>Мои заявки</h3>
+<div id="my-submissions"></div>
+</div>
+</section>
+<section class="screen" id="screen-clippers">
+<div class="page-head">
+<span class="eyebrow">♧ TEAM</span>
+<h1 data-i18n="navClippers">Нарезчики</h1>
+<p data-i18n="clippersSub">Основной состав, связанный с настоящими аккаунтами.</p>
+</div>
+<div class="rating-panel card">
+<div class="section-label">
+<div>
+<span class="eyebrow">COMMUNITY RANKING</span>
+<h2>Рейтинг нарезчиков</h2>
+</div>
+<select aria-label="Период рейтинга" id="rating-period">
+<option value="week">Неделя</option>
+<option value="month">Месяц</option>
+<option selected="" value="all">Всё время</option>
+</select>
+</div>
+<p>Только подтверждённые действия. Просмотры и сообщения сами по себе не дают очков.</p>
+<div id="rating-board"></div>
+<div id="my-rank"></div>
+<details>
+<summary>Как начисляются очки</summary>
+<div id="rating-public-rules"></div>
+</details>
+</div>
+<div class="card mini-capacity">
+<b data-i18n="occupiedSeats">Места в основе</b><strong id="clippers-capacity">— / 10</strong>
+</div>
+<div class="cards-grid" id="clippers-list"></div>
+</section>
+<section class="screen" id="screen-chat">
+<div class="page-head">
+<span class="eyebrow">▤ LIVE COMMUNITY</span>
+<h1 data-i18n="navChat">Общий чат</h1>
+<p data-i18n="chatSub">
+                Сообщения синхронизируются через Supabase. Возле каждого сообщения есть кнопка жалобы.
+              </p>
+</div>
+<div class="card chat-card">
+<div class="panel-title">
+<b>Общий чат Yaneher</b><span class="hint-pill" id="chat-status">OFFLINE</span>
+</div>
+<div class="chat-stream" id="chat-stream"><div class="empty">Для общения войди в аккаунт.</div></div>
+<button class="new-messages" hidden="" id="chat-new-messages">↓ Новые сообщения</button><button class="btn btn-secondary full" hidden="" id="older-chat">↑ Загрузить предыдущие сообщения</button>
+<div class="chat-reply" hidden="" id="chat-reply"></div>
+<div class="composer">
+<textarea id="chat-input" maxlength="1000" placeholder="Написать сообщение…" rows="2"></textarea><button class="btn btn-primary" data-i18n="send" id="chat-send">Отправить</button>
+</div>
+<p class="fineprint" id="chat-warning">Интервал между сообщениями: 5 секунд (для пользователей).</p>
+</div>
+</section>
+<section class="screen" id="screen-stats">
+<div class="page-head">
+<span class="eyebrow">▥ MY PROGRESS</span>
+<h1 id="stats-title">Путь к 500 000 просмотров</h1>
+<p id="stats-hint">⚠️ В статистику засчитываются только видео от 5 000 просмотров.</p>
+</div>
+<div class="stat-cards" id="stat-summary"></div>
+<div class="card">
+<div class="panel-title">
+<b data-i18n="calendar">Календарь</b>
+<div class="month-selector">
+<button class="icon-btn" id="prev-month">‹</button><span id="month-title"></span><button class="icon-btn" id="next-month">›</button>
+</div>
+</div>
+<div class="calendar-week"><b>Пн</b><b>Вт</b><b>Ср</b><b>Чт</b><b>Пт</b><b>Сб</b><b>Вс</b></div>
+<div class="calendar-days" id="calendar-days"></div>
+</div>
+<div class="card">
+<h3 id="stats-form-title">Добавить опубликованный ролик</h3>
+<form class="grid-form" id="stat-form">
+<input id="stat-id" type="hidden"/><label>Название ролика<input id="stat-name" maxlength="120" placeholder="Моя нарезка" required=""/></label><label>Дата публикации<input id="stat-date" required="" type="date"/></label><label>Просмотры<input id="stat-views" max="10000000000" min="0" required="" step="1" type="number"/></label><label>Ссылка на оригинал (необязательно)<input id="stat-url" placeholder="https://..." type="url"/></label>
+<div class="form-actions">
+<button class="btn btn-primary" type="submit">Сохранить запись</button><button class="btn btn-secondary" id="stat-clear" type="button">Сбросить</button>
+</div>
+</form>
+<div class="notice" hidden="" id="stat-import">
+<b>Найдены записи из старой версии v10</b>
+<p>Можно перенести свои локальные записи в аккаунт. Перед импортом проверь их.</p>
+<button class="btn btn-secondary" id="import-legacy">Импортировать мои записи</button>
+</div>
+</div>
+<div class="card">
+<h3>Мои видео и просмотры</h3>
+<div id="stats-journal"></div>
+</div>
+</section>
+<section class="screen" id="screen-rules">
+<div class="page-head">
+<span class="eyebrow">≡ COMMUNITY RULES</span>
+<h1 data-i18n="navRules">Правила</h1>
+<p data-i18n="rulesSub">Подтверждённые правила и дополнительные положения сообщества.</p>
+</div>
+<div class="cards-grid" id="rules-boxes"></div>
+<div class="card" hidden="" id="rules-banner">
+<h3>Баннер правил</h3>
+<img alt="Утверждённый баннер" class="banner-image" id="rules-image"/><a class="btn btn-secondary" id="rules-download">↓ Скачать разрешённый баннер</a>
+</div>
+</section>
+<section class="screen" id="screen-profile">
+<div class="page-head"><h1 data-i18n="profile">Профиль</h1></div>
+<div id="profile-detail"></div>
+<div class="card" hidden="" id="profile-editor">
+<h3>Настройки моего профиля</h3>
+<form class="grid-form" id="profile-form">
+<label>Уникальный никнейм<input id="profile-name" pattern="[a-zA-Z0-9_]{3,24}" required=""/><small class="profile-cooldown" id="profile-nickname-cooldown" aria-live="polite"></small></label>
+<div class="profile-upload-control"><span>Аватарка профиля</span><button class="btn btn-secondary" id="profile-avatar-choose" type="button">Выбрать изображение</button><input accept="image/jpeg,image/png,image/webp,image/heic,image/heif" hidden id="profile-avatar-file" type="file"/><small class="profile-cooldown" id="profile-avatar-cooldown" aria-live="polite"></small></div><label>TikTok URL<input id="profile-tiktok" placeholder="https://..." type="url"/></label><label>Telegram URL<input id="profile-telegram" placeholder="https://..." type="url"/></label><button class="btn btn-primary" type="submit">Сохранить профиль</button>
+</form>
+<button class="btn btn-secondary" id="signout">Выйти из аккаунта</button>
+</div>
+</section>
+<section class="screen" id="screen-admin">
+<div class="page-head">
+<span class="eyebrow">⚙ COMMUNITY CONTROL</span>
+<h1 data-i18n="navAdmin">Управления</h1>
+<p>Личные инструменты и доступные настройки. Административные действия защищены серверными правами.</p>
+</div>
+<div class="admin-tabs" id="admin-tabs"></div>
+<div id="admin-content"></div>
+</section>
+</main>
+</div>
+<dialog aria-labelledby="custom-title" class="modal customization-modal" id="customization-dialog">
+<header class="custom-header">
+<div>
+<div class="custom-title-line">
+<h2 id="custom-title">Кастомизация</h2>
+<span class="beta-pill">BETA</span>
+</div>
+<p id="custom-scope">Твой интерфейс. Твой ритм.</p>
+</div>
+<button aria-label="Закрыть кастомизацию" class="icon-btn" data-cancel-custom="">✕</button>
+</header>
+<div class="custom-layout">
+<div aria-label="Категории персонализации" aria-orientation="vertical" class="custom-nav" id="custom-tabs" role="tablist"></div>
+<div class="custom-main"><section id="custom-panel" role="tabpanel" tabindex="0"></section></div>
+<aside class="custom-preview-column">
+<div class="preview-label">
+              ПРЕДПРОСМОТР <span><i></i> LIVE</span>
+</div>
+<div class="custom-preview" id="custom-preview">
+<div class="custom-preview-card" id="custom-preview-card">
+<span aria-hidden="true" class="mini-ai-core">✦</span><b>Твоё пространство</b>
+<p>Цвета, стекло и плавность — в одном стиле.</p>
+<button class="btn btn-primary" data-preview-replay="">Проверить нажатие</button>
+</div>
+</div>
+<div class="preview-spec">
+<div><small>Палитра</small><b id="custom-preview-palette">Aurora Purple</b></div>
+<div><small>Атмосфера</small><b id="custom-preview-background">Живая Aurora</b></div>
+<div><small>Движение</small><b id="custom-preview-motion">Сбалансированный ритм</b></div>
+</div>
+<p class="preview-safety">
+              Настройки меняют только твой интерфейс. Контент и права доступа остаются прежними.
+            </p>
+</aside>
+</div>
+<footer class="custom-footer">
+<div class="custom-footer-left">
+<button class="link-btn custom-reset" data-reset-custom="">Сбросить настройки</button><small id="custom-save-status">Предпросмотр</small>
+</div>
+<div class="custom-footer-actions">
+<button class="btn btn-secondary" data-cancel-custom="">Отмена</button><button class="btn btn-primary" data-apply-custom="">Применить</button>
+</div>
+</footer>
+</dialog>
+<dialog class="modal about-dialog" id="about-dialog" aria-labelledby="about-title">
+<form method="dialog"><button aria-label="Закрыть" class="modal-close">✕</button></form>
+<header class="about-heading"><span class="eyebrow" translate="no">YaneCLIBB <small class="brand-beta">BETA</small></span><h2 id="about-title">О сайте</h2></header>
+<div class="about-copy">
+<div data-about-lang="ru" lang="ru" translate="no">
+<p>Всем привет! 👋</p>
+<p>Мы вдвоём создали этот сайт, чтобы помочь вам с нарезками, монтажом и другими вопросами, которые могут возникнуть в процессе работы.</p>
+<h3>Что есть на сайте?</h3>
+<p><strong>ЯнеИИ</strong>: ваш помощник, которому можно задать вопросы по монтажу, нарезкам и не только. Он постарается помочь вам разобраться с любой проблемой.</p>
+<p><strong>Кастомизация</strong>: вы можете настроить внешний вид сайта под себя, изменить цвета, оформление и многое другое.</p>
+<p>Также на сайте есть много других полезных функций, с которыми вы можете ознакомиться сами.</p>
+<p>Если вы нашли какую-то ошибку или что-то работает неправильно, в левом нижнем углу есть кнопка <strong>«Сообщить об ошибке»</strong>. Просто нажмите на неё и опишите проблему, а мы постараемся всё исправить как можно быстрее.</p>
+<p>Если у вас есть какие то идеи или пожелания по поводу сайта, обязательно пишите нам. Мы читаем ваши предложения и по возможности будем добавлять то, что вы хотите видеть.</p>
+<p><strong>Хочу также отметить, что сайт уже запущен, но пока находится в BETA-версии.</strong> Поэтому иногда могут встречаться баги или небольшие недоработки. Мы продолжаем работать над сайтом, исправлять ошибки и добавлять новые возможности.</p>
+<p>Мы вложили в этот проект много времени и сил, поэтому надеемся, что вам всё понравится.</p>
+<p><strong>Всем спасибо за поддержку! ❤️</strong></p>
+</div>
+<div data-about-lang="uk" lang="uk" translate="no" hidden>
+<p>Усім привіт! 👋</p>
+<p>Ми вдвох створили цей сайт, щоб допомогти вам із нарізками, монтажем та іншими питаннями, які можуть виникнути під час роботи.</p>
+<h3>Що є на сайті?</h3>
+<p><strong>ЯнеІІ</strong>: ваш помічник, якому можна поставити запитання про монтаж, нарізки й не тільки. Він постарається допомогти вам розібратися з будь-якою проблемою.</p>
+<p><strong>Кастомізація</strong>: ви можете налаштувати зовнішній вигляд сайту під себе, змінити кольори, оформлення та багато іншого.</p>
+<p>Також на сайті є багато інших корисних функцій, з якими ви можете ознайомитися самі.</p>
+<p>Якщо ви знайшли якусь помилку або щось працює неправильно, у лівому нижньому куті є кнопка <strong>«Повідомити про помилку»</strong>. Просто натисніть на неї й опишіть проблему, а ми постараємося все виправити якнайшвидше.</p>
+<p>Якщо у вас є якісь ідеї або побажання щодо сайту, обов’язково пишіть нам. Ми читаємо ваші пропозиції та за можливості додаватимемо те, що ви хочете бачити.</p>
+<p><strong>Хочу також зазначити, що сайт уже запущений, але поки перебуває в BETA-версії.</strong> Тому іноді можуть траплятися баги або невеликі недопрацювання. Ми продовжуємо працювати над сайтом, виправляти помилки та додавати нові можливості.</p>
+<p>Ми вклали в цей проєкт багато часу й сил, тому сподіваємося, що вам усе сподобається.</p>
+<p><strong>Усім дякуємо за підтримку! ❤️</strong></p>
+</div>
+<div data-about-lang="en" lang="en" translate="no" hidden>
+<p>Hi everyone! 👋</p>
+<p>The two of us created this site to help you with clips, editing and other questions that may come up as you work.</p>
+<h3>What’s on the site?</h3>
+<p><strong>YaneAI</strong>: your assistant for questions about editing, clips and more. It will do its best to help you work through any problem.</p>
+<p><strong>Customization</strong>: you can make the site your own by changing its colors, appearance and much more.</p>
+<p>There are also plenty of other useful features for you to explore.</p>
+<p>If you find a bug or something isn’t working properly, there is a <strong>“Report an error”</strong> button in the bottom-left corner. Click it and describe the problem, and we’ll try to fix it as quickly as possible.</p>
+<p>If you have any ideas or suggestions for the site, please let us know. We read your suggestions and will add what you’d like to see whenever possible.</p>
+<p><strong>I also want to point out that the site is already live, but it is still in BETA.</strong> That means you may occasionally encounter bugs or unfinished details. We’re continuing to work on the site, fix issues and add new features.</p>
+<p>We’ve put a lot of time and effort into this project, so we hope you enjoy it.</p>
+<p><strong>Thank you all for your support! ❤️</strong></p>
+</div>
+</div>
+<form method="dialog" class="about-footer"><button class="btn btn-primary">Понятно</button></form>
+</dialog>
+
+<dialog class="modal" id="auth-dialog">
+<form method="dialog"><button aria-label="Закрыть" class="modal-close">✕</button></form>
+<div class="dialog-heading">
+<div class="brandmark">Y</div>
+<div>
+<h2>Аккаунт YaneCLIBB</h2>
+<p>Один аккаунт для чата, ЯнеИИ и статистики.</p>
+</div>
+</div>
+<div class="tab-switch">
+<button class="active" data-authmode="login" type="button">Войти</button><button data-authmode="signup" type="button">Регистрация</button><button data-authmode="reset" type="button">Восстановить</button>
+</div>
+<div class="info-notice">ⓘ Предупреждаем, что письма с Gmail могут попадать в спам.</div>
+<form class="stack-form" id="auth-form">
+<label hidden="" id="auth-nickname-label">Уникальный никнейм<input id="auth-nickname" maxlength="24" minlength="3" pattern="[a-zA-Z0-9_]{3,24}" placeholder="YaneClipper"/></label><label>Email <input autocomplete="email" id="auth-email" required="" type="email"/></label><label id="auth-password-label">Пароль<input autocomplete="current-password" id="auth-password" minlength="8" required="" type="password"/></label><label hidden="" id="auth-confirm-label">Повтор пароля<input autocomplete="new-password" id="auth-confirm" minlength="8" type="password"/></label><button class="btn btn-primary full" id="auth-submit" type="submit">Войти</button>
+<p class="fineprint" id="auth-help">Email нужен для безопасного восстановления пароля.</p>
+</form>
+</dialog>
+<dialog class="modal" id="report-dialog">
+<form method="dialog"><button aria-label="Закрыть" class="modal-close">✕</button></form>
+<h2>🚩 Жалоба на сообщение</h2>
+<p>Администраторы увидят сообщение, причину и отправителя жалобы.</p>
+<form class="stack-form" id="report-form">
+<input id="report-message-id" type="hidden"/><label>Причина<select id="report-reason">
+<option value="Спам">Спам</option>
+<option value="Оскорбления">Оскорбления</option>
+<option value="Нарушение правил">Нарушение правил</option>
+<option value="Запрещённый контент">Запрещённый контент</option>
+<option value="Другое">Другое</option>
+</select></label><label>Комментарий (необязательно)<textarea id="report-comment" maxlength="180" rows="3"></textarea></label><button class="btn btn-primary" type="submit">Отправить жалобу</button>
+</form>
+</dialog>
+<dialog class="modal" id="submission-dialog">
+<form method="dialog"><button aria-label="Закрыть" class="modal-close">✕</button></form>
+<h2>▣ Предложить своё видео</h2>
+<p>Для публикации отправь оригинальную HTTPS-ссылку. Видео появится после одобрения.</p>
+<a class="drive-link" href="https://drive.google.com/drive/folders/1VRVZwEFdK1id3qVJNVA6cGQT5Imo6dOR?hl=ru" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" viewbox="0 0 24 24">
+<path d="m8 2 5 8-7 12H0L8 8Z" fill="#0F9D58"></path>
+<path d="m8 2 8 0 8 14h-9Z" fill="#F4B400"></path>
+<path d="m6 22 5-8h13l-4 8Z" fill="#4285F4"></path></svg><span>Архив всех стримов Янехера<small>Google Drive · исходники для нарезок</small></span><b>↗</b></a>
+<form class="stack-form" id="submission-form">
+<label>Название<input maxlength="120" minlength="3" name="title" required=""/></label><label>Ссылка на видео<input name="source_url" placeholder="https://..." required="" type="url"/></label><label>Кому принадлежит ролик<input maxlength="100" minlength="2" name="author_credit" required=""/></label><label>Описание<textarea maxlength="800" name="description" rows="3"></textarea></label><button class="btn btn-primary" type="submit">Отправить на рассмотрение</button>
+</form>
+</dialog>
+<dialog class="modal wide-modal" id="updates-dialog">
+<form method="dialog"><button aria-label="Закрыть" class="modal-close">✕</button></form>
+<h2>✎ История обновлений</h2>
+<div id="updates-list">
+<div class="empty">После подключения Supabase здесь появятся опубликованные версии.</div>
+</div>
+</dialog>
+<div aria-atomic="false" aria-live="polite" class="notification-stack" id="notification-stack"></div>
+<dialog class="modal wide-modal" id="notification-dialog">
+<form method="dialog"><button aria-label="Закрыть" class="modal-close">✕</button></form>
+<span class="eyebrow">NOTIFICATION CENTER</span>
+<h2>Уведомления</h2>
+<div class="table-actions">
+<button class="btn btn-secondary" id="notifications-read">Прочитать все</button><button class="btn btn-secondary" id="notifications-clear">Удалить прочитанные</button>
+</div>
+<div id="notification-settings"></div>
+<div id="notification-list"></div>
+</dialog>
+<dialog class="modal" id="bug-dialog">
+<form method="dialog"><button aria-label="Закрыть" class="modal-close">✕</button></form>
+<span class="eyebrow">COMMUNITY SUPPORT</span>
+<h2>Сообщить об ошибке</h2>
+<p>Опиши, что произошло и как повторить проблему. Не прикладывай пароли и личные данные.</p>
+<form class="stack-form" id="bug-form">
+<label>Категория<select name="category">
+<option value="bug">Ошибка</option>
+<option value="ui">Интерфейс</option>
+<option value="ai">ЯнеИИ</option>
+<option value="chat">Чат</option>
+<option value="video">Видео</option>
+<option value="account">Аккаунт</option>
+<option value="performance">Производительность</option>
+<option value="other">Другое</option>
+</select></label><label>Раздел<input id="bug-section" maxlength="40" minlength="2" name="section" required=""/></label><label>Описание<textarea maxlength="3000" minlength="10" name="description" placeholder="Шаги → что ожидалось → что произошло" required="" rows="5"></textarea></label><label class="upload-zone">Скриншот · JPEG, PNG, WebP до 3 МБ<input accept="image/jpeg,image/png,image/webp" id="bug-screenshot" type="file"/></label><small id="bug-wait"></small><button class="btn btn-primary" id="bug-submit" type="submit">Отправить обращение</button>
+</form>
+</dialog>
+<dialog class="modal wide-modal" id="detail-dialog">
+<form method="dialog"><button aria-label="Закрыть" class="modal-close">✕</button></form>
+<div id="detail-content"></div>
+</dialog>
+</div>
+</body>
+</html>

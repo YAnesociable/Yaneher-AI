@@ -1,0 +1,3 @@
+.localized-file-picker{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 0;font-size:13px;min-width:0}
+.localized-file-picker .btn{flex:none;min-height:38px}
+.localized-file-name{overflow-wrap:anywhere;color:var(--muted);min-width:0;flex:1 1 140px}

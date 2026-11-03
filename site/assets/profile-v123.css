@@ -1,0 +1,33 @@
+/* Profile edits and shared confirmations follow the active theme and accent. */
+.action-confirmation {
+  width: min(460px, calc(100vw - 32px));
+  padding: 28px;
+  color: var(--text, #20243c);
+  border: 1px solid color-mix(in srgb, var(--accent, #7264e8) 26%, transparent);
+  background: var(--surface, #f9faff);
+  box-shadow: 0 24px 90px #060b2440, 0 0 34px color-mix(in srgb, var(--accent, #7264e8) 12%, transparent);
+  border-radius: 24px;
+  animation: profile-dialog-in .22s ease-out;
+}
+[data-theme="dark"] .action-confirmation { background: var(--surface, #202538); color: var(--text, #f0f3ff); }
+.action-confirmation::backdrop { background:#080e285c; backdrop-filter:blur(8px); }
+.action-confirmation form { margin:0; }
+.action-confirmation h2 { font-size:21px; margin:16px 0 10px; }
+.action-confirmation p { font-size:14px; line-height:1.7; opacity:.85; white-space:pre-wrap; overflow-wrap:anywhere; }
+.action-confirmation-icon { display:grid; place-items:center; width:46px; height:46px; border-radius:15px; color:var(--accent,#7264e8); background:color-mix(in srgb, var(--accent,#7264e8) 12%, transparent); font-size:25px; box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--accent,#7264e8) 25%, transparent); }
+.action-confirmation-buttons { display:flex; justify-content:flex-end; gap:10px; margin-top:24px; }
+.action-confirmation-buttons .btn { min-height:44px; }
+.action-confirmation-input { width:100%; margin-top:8px; }
+.profile-avatar-edit { position:relative; display:inline-grid; border:0; background:none; padding:0; border-radius:50%; cursor:pointer; flex-shrink:0; }
+.profile-avatar-edit .small-avatar { width:64px; height:64px; font-size:25px; box-shadow:0 0 0 3px color-mix(in srgb, var(--accent,#7264e8) 15%, transparent), 0 0 22px color-mix(in srgb, var(--accent,#7264e8) 14%, transparent); }
+.profile-avatar-overlay { position:absolute; right:-3px; bottom:-3px; width:25px; height:25px; display:grid; place-items:center; color:white; background:var(--accent,#7264e8); border-radius:50%; border:2px solid var(--surface,#f9faff); font-size:17px; transition:transform .18s ease; }
+.profile-avatar-edit:hover .profile-avatar-overlay { transform:scale(1.12); }
+.profile-avatar-edit:disabled { cursor:default; opacity:.7; }
+.profile-avatar-edit:focus-visible { outline:3px solid var(--accent,#7264e8); outline-offset:5px; }
+.profile-upload-control { display:flex; flex-direction:column; align-items:flex-start; gap:8px; min-width:0; }
+.profile-upload-control > span { font-size:13px; font-weight:600; }
+.profile-cooldown { display:block; min-height:18px; font-size:11px; line-height:1.5; opacity:.72; font-variant-numeric:tabular-nums; }
+#profile-name:read-only { opacity:.7; cursor:default; }
+@keyframes profile-dialog-in { from { opacity:0; transform:translateY(10px) scale(.98); } to { opacity:1; transform:none; } }
+@media (max-width:480px) { .action-confirmation { padding:22px; } .action-confirmation-buttons .btn { flex:1; } }
+@media (prefers-reduced-motion:reduce) { .action-confirmation { animation:none; } .profile-avatar-overlay { transition:none; } }

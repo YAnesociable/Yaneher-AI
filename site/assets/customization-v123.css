@@ -1,0 +1,126 @@
+/* v12.3: one material model, shared by both themes. Text opacity is never changed. */
+.app[data-background] {
+  --surface-solid: #fff;
+  --surface-rgb: 255,255,255;
+  --material-surface: rgba(var(--surface-rgb),var(--panel-alpha));
+  --led-color: transparent;
+  --material-shadow: var(--shadow);
+  color-scheme: light;
+}
+.app[data-theme="dark"] { color-scheme: dark; }
+.app[data-shadows="none"] { --material-shadow: 0 0 0 transparent; }
+.app[data-background] :is(.card,.quick,.dashboard-widget,.diag-item,.category-card,.composer,.custom-preview-card,.glass-specimen-card) {
+  background: var(--material-surface);
+  border-radius: var(--custom-radius);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--material-shadow), 0 0 var(--led-size) var(--led-color), inset 0 1px 0 color-mix(in srgb,var(--surface-solid) 30%,transparent);
+  border-color: color-mix(in srgb,var(--primary) calc(var(--led-strength)*60%),var(--border));
+  transition: border-color .22s ease,box-shadow .22s ease,background-color .22s ease,border-radius .22s ease;
+}
+.app[data-background] :is(.topbar,.sidebar) {
+  background: var(--material-surface);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+}
+.app[data-background] .modal {
+  border-radius: var(--custom-radius);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--material-shadow), 0 0 var(--led-size) var(--led-color);
+}
+.app[data-background] :is(.card,.quick,.dashboard-widget):hover {
+  box-shadow: var(--material-shadow), 0 0 var(--led-size) var(--led-color), inset 0 1px 0 color-mix(in srgb,var(--surface-solid) 36%,transparent);
+}
+.app[data-background] .hero {
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--custom-radius);
+  box-shadow: var(--material-shadow),0 0 var(--led-size) var(--led-color);
+}
+.app[data-background] :is(.btn-primary,.core-center) {
+  box-shadow: 0 0 var(--led-size) var(--led-color);
+}
+.app[data-background] .btn-primary:hover {
+  box-shadow: 0 0 calc(var(--led-size)*1.2) var(--led-color);
+}
+.app[data-glow="off"] :is(.core-orbit:after,.core-center,.btn-primary) { box-shadow:none; }
+.app[data-background] :is(a,button,input,select,textarea,summary):focus-visible {
+  outline-color:var(--primary);
+}
+.custom-field > span { flex-wrap:wrap;justify-content:flex-start;gap:8px; }
+.custom-field > span > b { font:inherit;font-weight:650;flex:1; }
+.custom-field output { margin-left:auto; }
+.customization-modal .custom-controls .theme-scope-badge,
+.theme-scope-badge {
+  display:inline-flex;
+  align-items:center;
+  flex:none;
+  width:max-content;
+  padding:3px 7px;
+  border:1px solid color-mix(in srgb,var(--primary) 16%,var(--border));
+  border-radius:100px;
+  background:color-mix(in srgb,var(--primary) 6%,var(--surface-solid));
+  color:var(--muted);
+  font-size:10px;
+  font-weight:500;
+  line-height:1.35;
+  letter-spacing:0;
+  white-space:nowrap;
+}
+.custom-toggle > span { display:flex;flex-wrap:wrap;align-items:center;gap:7px; }
+.custom-toggle > span > b { flex:1; }
+.custom-toggle > span > small:not(.theme-scope-badge) { flex-basis:100%; }
+.background-choice .theme-scope-badge,.palette-choice .theme-scope-badge,.menu-choice .theme-scope-badge { justify-self:start; }
+.widget-setting > .theme-scope-badge { grid-column:1/-1; }
+.button-setting > b .theme-scope-badge { display:flex;margin-top:4px; }
+.glass-specimen {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  min-height:206px;
+  padding:28px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:var(--bg);
+}
+.glass-specimen:before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(125deg,transparent 25%,color-mix(in srgb,var(--primary) 23%,transparent) 25%,color-mix(in srgb,var(--primary) 23%,transparent) 50%,transparent 50%,transparent 75%,color-mix(in srgb,var(--primary2) 18%,transparent) 75%);
+  background-size:64px 64px;
+}
+.glass-specimen-light {
+  position:absolute;
+  z-index:-1;
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  right:16px;
+  top:-25px;
+  background:linear-gradient(120deg,var(--primary),var(--primary2));
+  opacity:.7;
+}
+.glass-specimen-card {
+  width:min(100%,340px);
+  padding:22px;
+  border:1px solid var(--border);
+}
+.glass-specimen-card .eyebrow { display:block;font-size:9px;letter-spacing:1.5px;margin-bottom:8px;color:var(--primary); }
+.glass-specimen-card>b { display:block;font-size:18px; }
+.glass-specimen-card p { font-size:13px!important;line-height:1.6;margin:8px 0 14px;color:var(--muted); }
+.glass-specimen-chip { display:inline-flex;padding:5px 9px;border:1px solid var(--border);border-radius:100px;font-size:11px;color:var(--primary);background:color-mix(in srgb,var(--primary) 6%,var(--surface-solid)); }
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  .app[data-background] :is(.card,.quick,.dashboard-widget,.diag-item,.category-card,.composer,.custom-preview-card,.glass-specimen-card,.topbar,.sidebar) { background:var(--surface-solid); }
+}
+@media(max-width:600px) {
+  .glass-specimen { padding:18px;min-height:200px; }
+  .glass-specimen-card { padding:18px; }
+  .custom-field>span { gap:7px; }
+  .custom-field>span>b { min-width:45%; }
+  .custom-field>span>output { min-width:42px;text-align:center; }
+}
