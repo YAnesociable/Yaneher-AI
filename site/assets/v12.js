@@ -1458,9 +1458,9 @@
     if (!f) return;
     if (f.type.startsWith("video/")) {
       S.aiImage = null;
-      if (!["video/mp4", "video/webm", "video/quicktime"].includes(f.type) || f.size > 150 * 1024 * 1024) {
+      if (!["video/mp4", "video/webm", "video/quicktime"].includes(f.type) || f.size > 60 * 1024 * 1024) {
         S.aiVideoFile = null;
-        return toast("Видео: MP4, WebM или MOV до 150 МБ");
+        return toast("Видео: MP4, WebM или MOV до 60 МБ");
       }
       if (!cfg.videoWorkerUrl) {
         S.aiVideoFile = null;
