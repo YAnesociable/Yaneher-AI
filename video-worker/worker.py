@@ -15,6 +15,10 @@ import subprocess
 import tempfile
 import asyncio
 import shutil
+import time
+import hmac
+import logging
+from contextlib import asynccontextmanager, suppress
 import httpx
 from io import BytesIO
 from pathlib import Path
@@ -24,7 +28,7 @@ from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image, ImageChops, ImageStat
 
-MAX_BYTES = int(os.getenv("VIDEO_MAX_MB", "150")) * 1024 * 1024
+MAX_BYTES = int(os.getenv("VIDEO_MAX_MB", "60")) * 1024 * 1024
 MAX_SECONDS = int(os.getenv("VIDEO_MAX_DURATION", "600"))
 SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
 SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY", "")
@@ -37,7 +41,64 @@ RISK_LEVELS = ("low", "medium", "high")
 RISK_TYPES = ("music", "footage", "image", "logo", "voice", "other")
 COPYRIGHT_DISCLAIMER = "Проверка ЯнеAI носит рекомендательный характер и не гарантирует отсутствие блокировок или ограничений после публикации."
 ORIGINS = [x.strip() for x in os.getenv("ALLOWED_ORIGINS", "").split(",") if x.strip()]
-app = FastAPI(title="YaneCLIBB Video Worker", docs_url=None, redoc_url=None)
+LOG = logging.getLogger("yaneher-video-cleanup")
+# Only the worker's own temporary folders may be removed. Never clean all of /tmp.
+TEMP_ROOT = Path(tempfile.gettempdir())
+TEMP_PREFIX = "yane_worker_"
+CLEANUP_INTERVAL_SECONDS = 30 * 60
+ACTIVE_TEMP_DIRS: set[str] = set()
+
+
+def cleanup_abandoned_video_dirs(*, minimum_age_seconds: int = CLEANUP_INTERVAL_SECONDS) -> dict[str, int]:
+    """Remove only finished/orphaned video jobs; never touch a live analysis."""
+    now = time.time()
+    removed = 0
+    skipped_active = 0
+    errors = 0
+    for folder in TEMP_ROOT.glob(TEMP_PREFIX + "*"):
+        try:
+            if folder.is_symlink() or not folder.is_dir() or folder.parent != TEMP_ROOT:
+                continue
+            if str(folder) in ACTIVE_TEMP_DIRS:
+                skipped_active += 1
+                continue
+            if now - folder.stat().st_mtime < minimum_age_seconds:
+                continue
+            shutil.rmtree(folder)
+            removed += 1
+        except OSError:
+            errors += 1
+            LOG.exception("Could not clean abandoned video temp directory")
+    return {"removedFolders": removed, "skippedActive": skipped_active, "errors": errors}
+
+
+def remove_job_temp_dir(folder: str) -> None:
+    """An ordinary completed request deletes its temp data immediately."""
+    try:
+        shutil.rmtree(folder, ignore_errors=True)
+    finally:
+        ACTIVE_TEMP_DIRS.discard(folder)
+
+
+async def periodic_temp_cleanup() -> None:
+    """Runs only while the free Render instance is awake; spin-down itself clears local files."""
+    while True:
+        cleanup_abandoned_video_dirs()
+        await asyncio.sleep(CLEANUP_INTERVAL_SECONDS)
+
+
+@asynccontextmanager
+async def worker_lifespan(_app: FastAPI):
+    janitor = asyncio.create_task(periodic_temp_cleanup())
+    try:
+        yield
+    finally:
+        janitor.cancel()
+        with suppress(asyncio.CancelledError):
+            await janitor
+
+
+app = FastAPI(title="YaneCLIBB Video Worker", docs_url=None, redoc_url=None, lifespan=worker_lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=ORIGINS, allow_methods=["POST", "GET"], allow_headers=["Authorization", "Content-Type"])
 
 
@@ -417,6 +478,21 @@ def build_copyright(semantic: dict[str, Any], fingerprints: dict[str, Any]) -> d
                       'Совпадения модели — предположения, а не подтверждённые нарушения.'}
 
 
+@app.post('/admin/cleanup')
+def manual_cleanup(authorization: str | None = Header(default=None)):
+    """Optional, secret-protected cleanup of leftovers without disrupting ongoing jobs.
+
+    Set VIDEO_CLEANUP_TOKEN to a random 32+ character secret on Render ONLY.
+    It must never be placed in the site's JavaScript or git repository.
+    """
+    token = os.getenv("VIDEO_CLEANUP_TOKEN", "")
+    if len(token) < 32:
+        raise HTTPException(404, "Ручная очистка отключена")
+    if not authorization or not hmac.compare_digest(authorization, "Bearer " + token):
+        raise HTTPException(403, "Недостаточно прав для ручной очистки")
+    return {"status": "ok", **cleanup_abandoned_video_dirs(minimum_age_seconds=0)}
+
+
 @app.get('/health')
 def health():
     return {'status': 'ready', 'fullTimeline': True, 'audioMetadata': True, 'videoAndAudioAI': bool(GEMINI_API_KEY),
@@ -452,7 +528,8 @@ async def analyze(file: UploadFile = File(...), authorization: str | None = Head
         raise HTTPException(415, 'Поддерживаются MP4, WebM и MOV')
     mode = mode if mode in ('full', 'copyright', 'both') else 'full'
     language = language if language in ('ru', 'uk', 'en') else 'ru'
-    folder = tempfile.mkdtemp(prefix='yane_worker_')
+    folder = tempfile.mkdtemp(prefix=TEMP_PREFIX)
+    ACTIVE_TEMP_DIRS.add(folder)
     try:
         path = str(Path(folder) / 'upload.bin')
         size = 0
@@ -469,7 +546,7 @@ async def analyze(file: UploadFile = File(...), authorization: str | None = Head
             raise HTTPException(400, 'Пустой файл')
         meta = await asyncio.to_thread(inspect_ffprobe, path)
     except BaseException:
-        shutil.rmtree(folder, ignore_errors=True)
+        remove_job_temp_dir(folder)
         raise
 
     if stream != '1':
@@ -478,7 +555,7 @@ async def analyze(file: UploadFile = File(...), authorization: str | None = Head
         try:
             return await run_pipeline(path, folder, file.content_type, meta, language, question, mode, no_emit)
         finally:
-            shutil.rmtree(folder, ignore_errors=True)
+            remove_job_temp_dir(folder)
 
     # Real staged progress as NDJSON: every stage is emitted when it actually starts.
     queue: asyncio.Queue = asyncio.Queue()
@@ -514,6 +591,6 @@ async def analyze(file: UploadFile = File(...), authorization: str | None = Head
         finally:
             if not task.done():
                 task.cancel()
-            shutil.rmtree(folder, ignore_errors=True)
+            remove_job_temp_dir(folder)
 
     return StreamingResponse(events(), media_type='application/x-ndjson', headers={'Cache-Control': 'no-store', 'X-Accel-Buffering': 'no'})
