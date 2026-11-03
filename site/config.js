@@ -3,5 +3,5 @@ window.YANE_CONFIG = {
   supabaseUrl: 'https://jmbznhnlutfxuthtkdky.supabase.co',
   supabaseAnonKey: 'sb_publishable_Z07KzrDN2XP33cOFUp6Y-w_6h0V_3kP',
   aiFunction: '/api/yaneai',
-  videoWorkerUrl: '' // Add an HTTPS video-worker URL only after deployment.
+  videoWorkerUrl: 'https://yaneher-ai.onrender.com' // Add an HTTPS video-worker URL only after deployment.
 };
